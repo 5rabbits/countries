@@ -18,6 +18,7 @@ module ISO3166
 
     def initialize(country_data)
       @country_data_or_code = country_data
+      @locales = {}
       reload
     end
 
@@ -99,6 +100,14 @@ module ISO3166
       @local_name ||= local_names.first
     end
 
+    def locales
+      codes = languages.uniq.map do |lang|
+        ["#{lang.downcase}-#{alpha2.upcase}", lang.downcase]
+      end.flatten.uniq
+
+      codes.map { |code| locale_from_code(code) }.compact
+    end
+
     def reload
       @data = if @country_data_or_code.is_a?(Hash)
                 @country_data_or_code
@@ -119,6 +128,19 @@ module ISO3166
 
     def subdivision_file_path
       File.join(File.dirname(__FILE__), 'data', 'subdivisions', "#{alpha2}.yaml")
+    end
+
+    def locale_from_code(code)
+      @locales[code] ||= find_locale_code(code)
+    end
+
+    def find_locale_code(code)
+      return unless File.exist?(locale_path(code))
+      YAML.load_file locale_path(code)
+    end
+
+    def locale_path(code)
+      File.join(File.dirname(__FILE__), 'data', 'locale', "#{code}.yaml")
     end
   end
 end
