@@ -1,0 +1,39 @@
+---
+fr-CA:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      long: "%d %B %Y"
+      short: "%y-%m-%d"
+    order:
+    - :year
+    - :month
+    - :day
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "$"
+    format:
+      delimiter: " "
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  time:
+    formats:
+      default: "%H h %M min %S s"
+      long: "%A %d %B %Y %H h %M"
+      short: "%H h %M"

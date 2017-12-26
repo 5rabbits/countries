@@ -1,0 +1,38 @@
+---
+mn:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      long: "%Y %B %d"
+      short: "%y-%m-%d"
+    order:
+    - :year
+    - :month
+    - :day
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "төг."
+    format:
+      delimiter: " "
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M"
+      long: "%Y %B %d, %H:%M:%S"
+      short: "%y-%m-%d"

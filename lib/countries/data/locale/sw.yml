@@ -1,0 +1,38 @@
+---
+sw:
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      long: "%e %B, %Y"
+      short: "%e %b"
+    order:
+    - :day
+    - :month
+    - :year
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%n%u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "/="
+    format:
+      delimiter: "."
+      precision: 2
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S"
+      long: "%A, %e. %B %Y, %H:%M:%S"
+      short: "%e %b %Y %H:%M"
