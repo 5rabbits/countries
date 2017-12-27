@@ -101,11 +101,26 @@ module ISO3166
     end
 
     def locales
-      codes = languages.uniq.map do |lang|
-        ["#{lang.downcase}-#{alpha2.upcase}", lang.downcase]
-      end.flatten.uniq
+      languages.uniq.map do |lang|
+        locale_from_code("#{lang.downcase}-#{alpha2.upcase}") ||
+          locale_from_code(lang.downcase)
+      end.compact.reduce({}, :merge)
+    end
 
-      codes.map { |code| locale_from_code(code) }.compact
+    def locale_hash(locale = 'en')
+      lang_country = "#{locale.to_s.downcase}-#{alpha2.upcase}"
+      locales[locale] || locales[lang_country]
+    end
+
+    def translated_locales(locale = 'en')
+      country_name = I18nData.countries(locale)[alpha2]
+
+      locales.keys.map do |country_locale|
+        language = country_locale.split('-').first.upcase
+        language_name = I18nData.languages(locale)[language]
+
+        "#{language_name} [#{country_name}]"
+      end
     end
 
     def reload

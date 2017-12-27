@@ -1,6 +1,6 @@
 module ISO3166
   UNSEARCHABLE_METHODS = [:translations].freeze
-  
+
   def self::Country(country_data_or_country)
     case country_data_or_country
     when ISO3166::Country
@@ -43,6 +43,21 @@ module ISO3166
 
     def translations(locale = 'en')
       I18nData.countries(locale.upcase)
+    end
+
+    def locales(locale = 'en')
+      ISO3166::Data.locales.map do |country_locale|
+        language, country_code = country_locale.split('-')
+        language_name = I18nData.languages(locale)[language.upcase]
+        next unless language_name
+
+        if country_code
+          country_name = I18nData.countries(locale)[country_code]
+          "#{language_name} [#{country_name}]" if country_name
+        else
+          language_name
+        end
+      end.compact
     end
 
     def search(query)

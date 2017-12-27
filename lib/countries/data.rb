@@ -3,8 +3,10 @@ module ISO3166
   # Handles building the in memory store of countries data
   class Data
     @@cache_dir = [File.dirname(__FILE__), 'cache']
+    @@data_dir = [File.dirname(__FILE__), 'data']
     @@cache = {}
     @@registered_data = {}
+    @@locales = []
 
     def initialize(alpha2)
       @alpha2 = alpha2.to_s.upcase
@@ -17,6 +19,10 @@ module ISO3166
     class << self
       def cache_dir
         @@cache_dir
+      end
+
+      def data_dir
+        @@data_dir
       end
 
       def cache_dir=(value)
@@ -59,10 +65,15 @@ module ISO3166
         @@cache
       end
 
+      def locales
+        load_locales
+      end
+
       def load_data!
         return @@cache unless load_required?
         @@cache = load_cache %w(countries.json)
         @@_country_codes = @@cache.keys
+        @@locales = load_locales
         @@cache = @@cache.merge(@@registered_data)
         @@cache
       end
@@ -139,6 +150,18 @@ module ISO3166
 
       def datafile_path(file_array)
         File.join([@@cache_dir] + file_array)
+      end
+
+      def load_locales
+        return @@locales unless @@locales.empty?
+        locales = Dir.glob(locale_data_path)
+        @@locales = locales.map do |locale|
+          File.basename locale, '.yaml'
+        end
+      end
+
+      def locale_data_path
+        File.join(data_dir, 'locale', '*.yaml')
       end
     end
   end
