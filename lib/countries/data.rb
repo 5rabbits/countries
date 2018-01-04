@@ -69,6 +69,10 @@ module ISO3166
         load_locales
       end
 
+      def locale(locale_code)
+        find_locale_code locale_code
+      end
+
       def load_data!
         return @@cache unless load_required?
         @@cache = load_cache %w(countries.json)
@@ -162,6 +166,15 @@ module ISO3166
 
       def locale_data_path
         File.join(data_dir, 'locale', '*.yaml')
+      end
+
+      def find_locale_code(code)
+        return unless File.exist?(locale_path(code))
+        YAML.load_file locale_path(code)
+      end
+
+      def locale_path(code)
+        File.join(File.dirname(__FILE__), 'data', 'locale', "#{code}.yaml")
       end
     end
   end

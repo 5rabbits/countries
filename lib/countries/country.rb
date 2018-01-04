@@ -146,16 +146,7 @@ module ISO3166
     end
 
     def locale_from_code(code)
-      @locales[code] ||= find_locale_code(code)
-    end
-
-    def find_locale_code(code)
-      return unless File.exist?(locale_path(code))
-      YAML.load_file locale_path(code)
-    end
-
-    def locale_path(code)
-      File.join(File.dirname(__FILE__), 'data', 'locale', "#{code}.yaml")
+      @locales[code] ||= ISO3166::Data.locale(code)
     end
   end
 end
