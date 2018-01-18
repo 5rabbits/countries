@@ -130,6 +130,10 @@ module ISO3166
       return language_name unless country
 
       country_name = I18nData.countries(locale)[country] 
+
+      if country_name.nil? || country_name.empty?
+        return "#{language_name} (#{language_tag})"
+      end
       "#{language_name} [#{country_name}]"
     end
 
