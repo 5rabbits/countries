@@ -125,9 +125,11 @@ module ISO3166
 
     def self.translate_locale(language_tag, locale = 'en')
       language, country = language_tag.split('-')
-      country_name = I18nData.countries(locale)[country]
       language_name = I18nData.languages(locale)[language.upcase]
 
+      return language_name unless country
+
+      country_name = I18nData.countries(locale)[country] 
       "#{language_name} [#{country_name}]"
     end
 
