@@ -123,6 +123,14 @@ module ISO3166
       end
     end
 
+    def self.translate_locale(language_tag, locale = 'en')
+      language, country = language_tag.split('-')
+      country_name = I18nData.countries(locale)[country]
+      language_name = I18nData.languages(locale)[language.upcase]
+
+      "#{language_name} [#{country_name}]"
+    end
+
     def reload
       @data = if @country_data_or_code.is_a?(Hash)
                 @country_data_or_code
